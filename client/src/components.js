@@ -6,6 +6,9 @@ export default class componentsBuilder {
   #screen;
   #layout;
   #input;
+  #chat;
+  #status;
+  #activityLog;
 
   #baseComponent() {
     return {
@@ -14,7 +17,7 @@ export default class componentsBuilder {
       keys: true,
       top: 0,
       scrollBoar: {
-        ch: "",
+        ch: " ",
         //   e para inverter o jeito que a pagina desliza quando o scroll e ativado que nem no mac
         inverse: true,
       },
@@ -40,6 +43,7 @@ export default class componentsBuilder {
       width: "100%",
       height: "100%",
     });
+    return this;
   }
 
   setInputComponent(onEnterPressed) {
@@ -64,10 +68,50 @@ export default class componentsBuilder {
     return this;
   }
 
+  setChatComponent() {
+    this.#chat = blessed.list({
+      ...this.#baseComponent(),
+      parent: this.#layout,
+      align: "left",
+      width: "50%",
+      height: "90%",
+      items: ["{bold}Messenger{/}"],
+    });
+    return this;
+  }
+
+  setStatusComponent() {
+    this.#status = blessed.list({
+      ...this.#baseComponent(),
+      parent: this.#layout,
+      width: "25%",
+      height: "90%",
+      items: ["{bold}Users on Room{/}"],
+    });
+    return this;
+  }
+
+  setActivityLogComponent() {
+    this.#activityLog = blessed.list({
+      ...this.#baseComponent(),
+      parent: this.#layout,
+      width: "25%",
+      height: "90%",
+      style: {
+        fg: "yellow",
+      },
+      items: ["{bold}Activity Log{/}"],
+    });
+    return this;
+  }
+
   build() {
     const components = {
       screen: this.#screen,
       input: this.#input,
+      chat: this.#chat,
+      activityLog: this.#activityLog,
+      status: this.#status,
     };
 
     return components;

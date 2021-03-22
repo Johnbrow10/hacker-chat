@@ -1,4 +1,5 @@
 import componentsBuilder from "./components.js";
+import { constants } from "./constants.js";
 
 export default class terminalController {
   #userCollors = new Map();
@@ -36,8 +37,7 @@ export default class terminalController {
 
   #onLogChanged({ screen, activityLog }) {
     return (msg) => {
-      //
-
+      // sempre left para sair e join para entrar
       const [userName] = msg.split(/\s/);
       const collor = this.#getUserCollor(userName);
 
@@ -47,9 +47,35 @@ export default class terminalController {
     };
   }
 
+  #onStatusChanged({ screen, status }) {
+    return (users) => {
+      //   pegar o primeiro elemento da lista
+      const { content } = status.items.shift();
+      status.clearItems();
+      status.addItem(content);
+
+      users.forEach((userName) => {
+        const collor = this.#getUserCollor(userName);
+        status.addItem(`{${collor}}{bold}${userName}{/}`);
+      });
+
+      screen.render();
+    };
+  }
+
   #registerEvents(eventEmitter, components) {
-    eventEmitter.on("message:received", this.#onMessageReceived(components));
-    eventEmitter.on("activityLog:updated", this.#onLogChanged(components));
+    eventEmitter.on(
+      constants.events.app.MESSAGE_RECEIVED,
+      this.#onMessageReceived(components)
+    );
+    eventEmitter.on(
+      constants.events.app.ACTIVITYLOG_UPDATED,
+      this.#onLogChanged(components)
+    );
+    eventEmitter.on(
+      constants.events.app.STATUS_UPDATED,
+      this.#onStatusChanged(components)
+    );
   }
 
   async initializeTable(eventEmitter) {
@@ -70,18 +96,21 @@ export default class terminalController {
     this.#registerEvents(eventEmitter, components);
     components.input.focus();
     components.screen.render();
-    setInterval(() => {
-      //   eventEmitter.emit("message:received", {
-      //     message: "salve quebrada",
-      //     userName: "Johnbrow",
-      //   });
-      //   eventEmitter.emit("message:received", {
-      //     message: "ta salvado",
-      //     userName: "livian",
-      //   });
-
-      eventEmitter.emit("activityLog:updated", "Johnbrow left");
-      eventEmitter.emit("activityLog:updated", "livian join");
-    }, 1000);
+    // setInterval(() => {
+    //   eventEmitter.emit("message:received", {
+    //     message: "salve quebrada",
+    //     userName: "Johnbrow",
+    //   });
+    //   eventEmitter.emit("message:received", {
+    //     message: "ta salvado",
+    //     userName: "livian",
+    //   });
+    // const users = ["Johnbrowssons"];
+    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
+    // users.push("livian");
+    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
+    // users.push("fernando", "padre marcelo");
+    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
+    // }, 1000);
   }
 }

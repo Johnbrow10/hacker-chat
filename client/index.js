@@ -1,4 +1,4 @@
-import Events from 'events';
+import Events from "events";
 import terminalController from "./src/terminalController.js";
 
 const componentEmitter = new Events();

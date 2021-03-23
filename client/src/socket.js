@@ -1,4 +1,5 @@
 export default class SocketClient {
+  #serverConnection = {};
   constructor({ host, port, protocol }) {
     this.port = port;
     this.host = host;
@@ -20,8 +21,11 @@ export default class SocketClient {
     req.end();
 
     return new Promise((resolve) => {
-      req.once("upgrade", (res,socket)=> resolve(socket) );
+      req.once("upgrade", (res, socket) => resolve(socket));
     });
   }
-    
+  async initialize() {
+    this.#serverConnection = await this.createConnection();
+    console.log("I connected to the server!!");
+  }
 }

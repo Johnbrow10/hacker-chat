@@ -4,8 +4,11 @@ export const constants = {
       MESSAGE_RECEIVED: "message:received",
       MESSAGE_SENT: "message:sent",
       ACTIVITYLOG_UPDATED: "activityLog:updated",
-      STATUS_UPDATED: 'status:updated'
+      STATUS_UPDATED: "status:updated",
     },
-    socket: {},
+    socket: {
+      JOIN_ROOM: "joinRoom",
+      MESSAGE: "message",
+    },
   },
 };

@@ -25,5 +25,12 @@ export default class EventManager {
     this.#updateUsersComponent();
   }
 
+  #updateUsersComponent() {
+    this.componentEmitter.emit(
+      constants.events.app.STATUS_UPDATED,
+      Array.from(this.#allUsers.values())
+    );
+  }
+
  
 }

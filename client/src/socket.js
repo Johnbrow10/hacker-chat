@@ -13,7 +13,7 @@ export default class SocketClient {
     this.#serverConnection.write(JSON.stringify({ event, message }));
   }
 
-  attachEvents() {
+  attachEvents(events) {
     this.#serverConnection.on("data", (data) => {
       try {
         data
@@ -28,6 +28,18 @@ export default class SocketClient {
         console.log("invalid!", data.toString(), error);
       }
     });
+
+    this.#serverConnection.on("end", () => {
+      console.log("I Disconnected!!");
+    });
+
+    this.#serverConnection.on("error", (error) => {
+      console.error("DEU RUIM", error);
+    });
+
+    for (const [key, value] of events) {
+      this.#serverListner.on(key, value);
+    }
   }
 
   async createConnection() {

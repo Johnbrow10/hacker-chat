@@ -38,6 +38,16 @@ export default class Controller {
     );
   }
 
+  broadCast({ roomId, includCurrentSocket = false }) {
+    const usersOnRoom = this.#rooms.get(roomId);
+
+    for (const [key, user] of usersOnRoom) {
+      if (!includCurrentSocket && key === socketId) continue;
+
+      this.socketServer.sendMessage(user.socket, event, message);
+    }
+  }
+
   #joinUserRoom(roomId, user) {
     const usersOnRoom = this.#rooms.get(roomId) ?? new Map();
     usersOnRoom.set(user.id, user);

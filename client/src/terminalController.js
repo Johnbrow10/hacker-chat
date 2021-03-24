@@ -20,7 +20,7 @@ export default class terminalController {
   #onInputReceived(eventEmitter) {
     return function () {
       const message = this.getValue();
-      console.log(message);
+      eventEmitter.emit(constants.events.app.MESSAGE_SENT, message);
       this.clearValue();
     };
   }
@@ -96,21 +96,5 @@ export default class terminalController {
     this.#registerEvents(eventEmitter, components);
     components.input.focus();
     components.screen.render();
-    // setInterval(() => {
-    //   eventEmitter.emit("message:received", {
-    //     message: "salve quebrada",
-    //     userName: "Johnbrow",
-    //   });
-    //   eventEmitter.emit("message:received", {
-    //     message: "ta salvado",
-    //     userName: "livian",
-    //   });
-    // const users = ["Johnbrowssons"];
-    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-    // users.push("livian");
-    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-    // users.push("fernando", "padre marcelo");
-    // eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-    // }, 1000);
   }
 }

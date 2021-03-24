@@ -25,6 +25,21 @@ export default class EventManager {
     this.#updateUsersComponent();
   }
 
+  // chama a constant com o mesmo nome, entao seta todos os usuarios e suas mensagens
+  newUserConnected(message) {
+    const user = message;
+    this.#allUsers.set(user.id, user.userName);
+      this.#updateUsersComponent();
+      this.#updateActivityLogComponent(`${user.userName}`);
+  }
+
+  #updateActivityLogComponent(message) {
+    this.componentEmitter.emit(
+      constants.events.app.ACTIVITYLOG_UPDATED,
+      message
+    );
+  }
+
   #updateUsersComponent() {
     this.componentEmitter.emit(
       constants.events.app.STATUS_UPDATED,

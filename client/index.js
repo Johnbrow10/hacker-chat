@@ -1,5 +1,27 @@
-/*
+#!/usr/bin/env node
+
+/* 
+    chmod +x index.js
  */
+
+/* 
+npm i -g @johnbrow/chat-hacker-client
+
+npm unlink -g @johnbrow/chat-hacker-client
+./index.js \
+       --username johnbrow \
+       --room sala01
+
+    ./index.js \
+       --username johnbrow \
+       --room sala01
+
+    node index.js \
+    --username johnbrow\
+    --room sala01 \
+    --hostUri localhost
+
+  */
 import Events from "events";
 import CliConfig from "./src/cliConfig.js";
 import EventManager from "./src/eventManager.js";

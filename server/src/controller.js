@@ -62,6 +62,7 @@ export default class Controller {
     }
   }
 
+ 
   #joinUserRoom(roomId, user) {
     const usersOnRoom = this.#rooms.get(roomId) ?? new Map();
     usersOnRoom.set(user.id, user);
@@ -81,9 +82,29 @@ export default class Controller {
     };
   }
 
+  #logoutUser(id, roomId) {
+    // deleta o usuario da sala
+    this.#users.delete(id);
+    const usersOnRoom = this.#rooms.get(roomId);
+    usersOnRoom.delete(id);
+
+    // e atualizou a sala que o usuario saiu dela
+    this.#rooms.set(roomId, usersOnRoom);
+  }
+
   #onSocketClosed(id) {
-    return (data) => {
-      console.log("onSocketClosed", id);
+    return (_) => {
+      const { userName, roomId } = this.#users.get(id);
+      console.log(userName, "disconnected", id);
+      this.#logoutUser(id, roomId);
+      // para comunicar a rede que o usuario foi disconectado
+
+      this.broadCast({
+        roomId,
+        message: { id, userName },
+        socketId: id,
+        event: constants.event.DISCONNECT_USER,
+      });
     };
   }
 

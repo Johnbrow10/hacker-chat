@@ -33,7 +33,9 @@ export default class EventManager {
     this.#updateUsersComponent();
   }
 
-  
+  message(message) {
+    this.componentEmitter.emit(constants.events.app.MESSAGE_RECEIVED, message);
+  }
 
   // chama a constant com o mesmo nome, entao seta todos os usuarios e suas mensagens
   newUserConnected(message) {

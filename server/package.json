@@ -9,6 +9,9 @@
     "start": "node src/",
     "dev": "npx nodemon src/"
   },
+  "engines": {
+    "node": "15"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

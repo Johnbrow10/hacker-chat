@@ -1,14 +1,19 @@
 {
-  "name": "src",
+  "name": "@johnbrow/chat-hacker-client",
   "version": "1.0.0",
-  "description": "",
+  "description": " chat feito com modulos gerados do nodeJs e ultilizando JavaScript para estruturar",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "chat-hacker": "index.js"
+  },
   "scripts": {
     "user": "node index.js --username johnbrow --room sala01 --hostUri http://localhost:9898",
     "user01": "node index.js --username livian --room sala01 --hostUri http://localhost:9898",
     "user03": "node index.js --username marcinha --room sala02 --hostUri http://localhost:9898",
     "user04": "node index.js --username polenta --room sala02 --hostUri http://localhost:9898",
+    "user05": "node index.js --username heroku --room sala02 ",
+    "user06": "node index.js --username heroTest --room sala02 ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

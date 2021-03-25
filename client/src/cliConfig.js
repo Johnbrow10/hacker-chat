@@ -1,5 +1,7 @@
+const PRODUCT_URL = "https://chat-hacker-js.herokuapp.com/";
+
 export default class CliConfig {
-  constructor({ username, hostUri, room }) {
+  constructor({ username, hostUri = PRODUCT_URL, room }) {
     this.username = username;
     this.room = room;
 

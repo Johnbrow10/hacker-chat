@@ -62,7 +62,20 @@ export default class Controller {
     }
   }
 
- 
+  message(socketId, data) {
+    // capturar o roomId para poder o usuario mandar mensagem apenas para alguem na mesma sala
+    const { userName, roomId } = this.#users.get(socketId);
+
+    this.broadCast({
+      roomId,
+      socketId,
+      event: constants.event.MESSAGE,
+      message: { userName, message: data },
+      // a mensagem encaminhada para o servidor e a mensagem sera repassada se o usuario estiver online
+      includeCurrentSocket: true,
+    });
+  }
+
   #joinUserRoom(roomId, user) {
     const usersOnRoom = this.#rooms.get(roomId) ?? new Map();
     usersOnRoom.set(user.id, user);
